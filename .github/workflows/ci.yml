@@ -17,6 +17,9 @@ jobs:
       TAPIOCA_VERSION: ${{ matrix.tapioca }}
     steps:
       - uses: actions/checkout@v4
+      # The lockfile pins one tapioca; each matrix entry resolves its own
+      # instead, which frozen mode would refuse against the committed lock.
+      - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
